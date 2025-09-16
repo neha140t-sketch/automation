@@ -1,6 +1,8 @@
 package communityproject;
 
+import java.io.FileInputStream;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,15 +25,18 @@ public class login {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            // Email field
-            WebElement email = wait.until(ExpectedConditions.elementToBeClickable(
-                    By.name("email")));
-            email.sendKeys("neha.t@gleamxsolutions.com");
+            Properties prop = new Properties();
+            prop.load(new FileInputStream("config.properties"));
 
-            // Password field
-            WebElement password = wait.until(ExpectedConditions.elementToBeClickable(
-                    By.name("password")));
-            password.sendKeys("Neha@123456");
+            String emailValue = prop.getProperty("EMAIL");
+            String passwordValue = prop.getProperty("PASSWORD");
+
+            // Selenium code
+            WebElement email = wait.until(ExpectedConditions.elementToBeClickable(By.name("email")));
+            email.sendKeys(emailValue);
+
+            WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
+            password.sendKeys(passwordValue);
 
             // Continue button
             // Click login
